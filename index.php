@@ -42,10 +42,10 @@ if ($result->num_rows > 0) {
     <section class="search">
       <h2>¡Los mejores Productos al mejor Precio!</h2>
       
-      <div class="search-box">
+<!--    <div class="search-box">
         <input type="text" placeholder="Busque sus productos aquí" />
         <button>Buscar</button>
-      </div>
+      </div> -->
     </section>
     </div>
     <section class="categorias">
