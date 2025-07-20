@@ -86,7 +86,7 @@ $isAdmin = isset($_SESSION['admin']) && $_SESSION['admin'] === true;
       </div>
       <div class="text-end">
         <h4 id="cart-total">Total: S/ <?php echo number_format($total_carrito, 2); ?></h4>
-        <a href="cuenta.php" class="btn btn-success mt-3">Finalizar Pedido</a>
+        <a href="/php/finalizar_pedido.php" id="btn-finalizar" class="btn btn-success mt-3">Finalizar Pedido</a>
       </div>
     </div>
   </main>

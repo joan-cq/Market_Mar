@@ -121,3 +121,41 @@ function agregarAlCarrito(productoId, nombre, precio) {
     alert('Hubo un problema de conexión.');
   });
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  const btnFinalizar = document.getElementById("btn-finalizar");
+
+  if (btnFinalizar) {
+    btnFinalizar.addEventListener("click", function (e) {
+      e.preventDefault();
+
+      if (!confirm("¿Estás seguro de finalizar tu pedido?")) return;
+
+      fetch('php/finalizar_pedido.php', {
+        method: 'POST'
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            alert("¡Pedido registrado correctamente!");
+
+            // Vaciar tabla del carrito en pantalla
+            const cartBody = document.getElementById("cart-body");
+            cartBody.innerHTML = '<tr><td colspan="5" class="text-center">Tu carrito está vacío.</td></tr>';
+            document.getElementById("cart-total").textContent = "Total: S/ 0.00";
+
+            // Redirigir después de unos segundos (opcional)
+            setTimeout(() => {
+              window.location.href = 'cuenta.php';
+            }, 1500);
+          } else {
+            alert("Error al finalizar el pedido: " + data.message);
+          }
+        })
+        .catch(error => {
+          console.error("Error al finalizar pedido:", error);
+          alert("Hubo un problema al procesar el pedido.");
+        });
+    });
+  }
+});
