@@ -30,6 +30,20 @@
   padding-bottom: 0.3rem;
 }
 
+/* --- Admin Styles --- */
+.admin-link {
+  color: #28405a !important;
+  font-weight: bold;
+  background: #ffde59;
+  border-radius: 8px;
+  margin-left: 8px;
+  padding: 0.5rem 1rem;
+}
+.admin-link:hover {
+  background: #0cc0df;
+  color: #fff !important;
+}
+
 /* --- Footer --- */
 .custom-footer {
   background: linear-gradient(90deg, #5de0e6, #004aad);

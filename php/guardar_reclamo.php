@@ -1,9 +1,5 @@
 <?php
-// Conexión a la base de datos
-$conexion = new mysqli("localhost", "admin", "123456789", "market_mar");
-if ($conexion->connect_error) {
-    die("Error de conexión: " . $conexion->connect_error);
-}
+require_once 'conexion.php';
 
 // Obtener datos del formulario
 $nombre     = $_POST['nombre'];
@@ -17,13 +13,14 @@ $descripcion = $_POST['descripcion'];
 $tipo_reclamo = $_POST['tipo_reclamo'];
 $reclamo    = $_POST['reclamo'];
 $pedido     = $_POST['pedido'];
+$estado     = 'PENDIENTE'; // Estado por defecto
 
 // Insertar en la base de datos
-$sql = "INSERT INTO reclamos (nombre, domicilio, dni, telefono, correo, tipo_bien, monto, descripcion, tipo_reclamo, detalle, pedido) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+$sql = "INSERT INTO reclamos (nombre, domicilio, dni, telefono, correo, tipo_bien, monto, descripcion, tipo_reclamo, detalle, pedido, estado) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-$stmt = $conexion->prepare($sql);
-$stmt->bind_param("sssisssssss", $nombre, $domicilio, $dni, $telefono, $mail, $bien, $monto, $descripcion, $tipo_reclamo, $reclamo, $pedido);
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("sssissssssss", $nombre, $domicilio, $dni, $telefono, $mail, $bien, $monto, $descripcion, $tipo_reclamo, $reclamo, $pedido, $estado);
 
 if ($stmt->execute()) {
     echo "<script>
@@ -35,5 +32,5 @@ if ($stmt->execute()) {
 }
 
 $stmt->close();
-$conexion->close();
+$conn->close();
 ?>
