@@ -1,6 +1,20 @@
 <?php
 session_start();
+require_once 'php/conexion.php';
+
 $isAdmin = isset($_SESSION['admin']) && $_SESSION['admin'] === true;
+
+// Obtener categorías de la base de datos
+$sql = "SELECT nombre, imagen FROM categorias ORDER BY nombre ASC";
+$result = $conn->query($sql);
+$categorias = [];
+if ($result->num_rows > 0) {
+    while($row = $result->fetch_assoc()) {
+        $categorias[] = $row;
+    }
+}
+// No cerramos la conexión aquí por si se necesita en el footer.
+// $conn->close();
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -37,36 +51,26 @@ $isAdmin = isset($_SESSION['admin']) && $_SESSION['admin'] === true;
     <section class="categorias">
       <h2>Categorías</h2>
       <div class="categorias-grid">
-        <div>
-          <img src="img/categoria_arroz.jpg" alt="Arroz" />
-          <br>
-          <a href="arroz.php"><strong>Arroz</strong></a>
-        </div>
-        <div>
-          <img src="img/categoria_aceite.jpg" alt="Aceite" />
-          <br>
-          <a href="aceite.php"><strong>Aceite</strong></a>
-        </div>
-        <div>
-          <img src="img/categoria_azucar.jpg" alt="Azucar" />
-          <br>
-          <a href="azucar.php"><strong>Azucar</strong></a>
-        </div>
-        <div>
-          <img src="img/categoria_tuberculos.jpg" alt="Tubérculos" />
-          <br>
-          <a href="tuberculos.php"><strong>Tubérculos</strong></a>
-        </div>
-        <div>
-          <img src="img/categoria_verduras.jpg" alt="Verduras" />
-          <br>
-          <a href="verduras.php"><strong>Verduras</strong></a>
-        </div>
-        <div>
-          <img src="img/categoria_golosinas.jpg" alt="Golosinas" />
-          <br>
-          <a href="golosinas.php"><strong>Golosinas</strong></a>
-        </div>
+        <?php if (!empty($categorias)): ?>
+          <?php foreach ($categorias as $categoria): ?>
+            <?php
+              // Crear el nombre del archivo a partir del nombre de la categoría
+              // Por ejemplo: "Tubérculos" se convierte en "tuberculos.php"
+              $nombre_archivo = strtolower(htmlspecialchars($categoria['nombre']));
+              // Manejar caracteres especiales si es necesario, por ejemplo, tildes.
+              $nombre_archivo = str_replace('é', 'e', $nombre_archivo); // para "Tubérculos"
+            ?>
+            <div>
+              <a href="<?php echo $nombre_archivo; ?>.php">
+                <img src="data:image/jpeg;base64,<?php echo base64_encode($categoria['imagen']); ?>" alt="<?php echo htmlspecialchars($categoria['nombre']); ?>" />
+              </a>
+              <br>
+              <a href="<?php echo $nombre_archivo; ?>.php"><strong><?php echo htmlspecialchars($categoria['nombre']); ?></strong></a>
+            </div>
+          <?php endforeach; ?>
+        <?php else: ?>
+          <p>No hay categorías para mostrar.</p>
+        <?php endif; ?>
       </div>
     </section>
   </main>
