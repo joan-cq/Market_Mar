@@ -14,9 +14,28 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     const confirmacion = confirm("¿Seguro que deseas enviar esta sugerencia?");
-    if (confirmacion) {
-      alert("¡Gracias por tu sugerencia!");
-      form.submit(); // solo si tienes backend, si no puedes omitir esto
-    }
+    if (!confirmacion) return;
+
+    // Enviar por fetch
+    fetch("php/guardar_sugerencias.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: `nombre=${encodeURIComponent(nombre)}&mail=${encodeURIComponent(mail)}&sugerencia=${encodeURIComponent(sugerencia)}`,
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          alert("¡Gracias por tu sugerencia!");
+          form.reset();
+        } else {
+          alert("Error: " + data.error);
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        alert("Error al enviar la sugerencia.");
+      });
   });
 });
