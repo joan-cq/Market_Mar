@@ -1,11 +1,12 @@
 <?php
+session_start();
 require_once 'php/conexion.php';
 
 // Definir el nombre de la categoría para esta página
 $categoria_nombre = "Verduras";
 
 // Preparar la consulta para obtener los productos
-$sql = "SELECT p.nombre, p.precio, p.imagen
+$sql = "SELECT p.id, p.nombre, p.precio, p.imagen
         FROM productos p
         JOIN categorias c ON p.categoria_id = c.id
         WHERE c.nombre = ?";
@@ -60,7 +61,7 @@ $stmt->close();
                     <p class="card-text">S/ <?php echo number_format($producto['precio'], 2); ?> por Kg</p>
                     <button
                       class="btn btn-primary w-100"
-                      onclick="agregarAlCarrito('<?php echo htmlspecialchars($producto['nombre'], ENT_QUOTES); ?>', <?php echo $producto['precio']; ?>)"
+                      onclick="agregarAlCarrito(<?php echo $producto['id']; ?>, '<?php echo htmlspecialchars($producto['nombre'], ENT_QUOTES); ?>', <?php echo $producto['precio']; ?>)"
                     >
                       Agregar al carrito
                     </button>

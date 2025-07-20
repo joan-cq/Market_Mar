@@ -1,3 +1,7 @@
+<?php
+session_start();
+$isAdmin = isset($_SESSION['admin']) && $_SESSION['admin'] === true;
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>

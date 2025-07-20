@@ -3,6 +3,12 @@ $isAdmin = isset($_SESSION['admin']) && $_SESSION['admin'] === true;
 $isUser = isset($_SESSION['usuario_id']) && !$isAdmin;
 ?>
 
+<script>
+  const IS_LOGGED_IN = <?php echo json_encode($isUser || $isAdmin); ?>;
+</script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
 <nav class="navbar navbar-expand-lg custom-navbar">
   <div class="container">
     <a class="navbar-brand" href="index.php">
@@ -37,8 +43,13 @@ $isUser = isset($_SESSION['usuario_id']) && !$isAdmin;
         <?php endif; ?>
 
         <?php if ($isUser || $isAdmin): ?>
-          <li class="nav-item"><a class="nav-link" href="php/logout.php">Cerrar sesión</a></li>
+          <li class="nav-item logout-icon">
+            <a class="nav-link" href="php/logout.php" title="Cerrar sesión">
+              <i class="fas fa-sign-out-alt me-2"></i> Cerrar sesión
+            </a>
+          </li>
         <?php endif; ?>
+
       </ul>
     </div>
   </div>

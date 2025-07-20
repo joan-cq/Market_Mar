@@ -1,6 +1,5 @@
 <?php
 session_start();
-$isAdmin = isset($_SESSION['admin']) && $_SESSION['admin'] === true;
 $isLogged = isset($_SESSION['usuario']); // Cambia 'usuario' por el nombre de tu variable de sesión de usuario
 ?>
 <!DOCTYPE html>
@@ -25,27 +24,6 @@ $isLogged = isset($_SESSION['usuario']); // Cambia 'usuario' por el nombre de tu
     <div class="container">
       <div class="row justify-content-center">
         <?php if (!$isLogged): ?>
-          <?php if ($isAdmin): ?>
-            <!-- Solo registro para admin -->
-            <div class="col-md-6">
-              <div class="bg-white rounded p-4 shadow-sm">
-                <h2 class="mb-4 text-center">Crear cuenta</h2>
-                <form action="php/registro.php" method="post" onsubmit="return validarRegistro(this);">
-                  <input type="text" name="nombre" placeholder="Nombre" required class="form-control mb-3">
-                  <input type="email" name="correo" placeholder="Correo" required class="form-control mb-3">
-                  <input type="text" name="celular" placeholder="Celular" required class="form-control mb-3" maxlength="9">
-                  <input type="text" name="dni" placeholder="DNI" required class="form-control mb-3" maxlength="8">
-                  <input type="password" name="clave" placeholder="Contraseña" required class="form-control mb-3">
-                  <input type="password" name="clave2" placeholder="Confirmar contraseña" required class="form-control mb-3">
-                  <select name="tipo" class="form-control mb-3" required>
-                    <option value="USUARIO">Usuario</option>
-                    <option value="ADMINISTRADOR">Administrador</option>
-                  </select>
-                  <button type="submit" class="btn btn-success w-100">Registrar</button>
-                </form>
-              </div>
-            </div>
-          <?php else: ?>
             <div class="row justify-content-center">
               <!-- Login -->
               <div class="col-md-6">
@@ -74,7 +52,6 @@ $isLogged = isset($_SESSION['usuario']); // Cambia 'usuario' por el nombre de tu
                 </div>
               </div>
             </div>
-          <?php endif; ?>
         <?php endif; ?>
       </div>
     </div>

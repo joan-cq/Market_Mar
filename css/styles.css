@@ -8,7 +8,7 @@
 }
 .custom-navbar .nav-link,
 .custom-navbar .navbar-brand {
-  font-size: 1.9rem;
+  font-size: 1.7rem;
   color: #ffffff !important;
   font-weight: 1000;
 }
@@ -69,4 +69,19 @@ body {
 .is-invalid {
   border: 2px solid red;
   background-color: #ffe6e6;
+}
+
+.logout-icon {
+  margin-left: auto; /* Empuja este ítem hacia la derecha */
+}
+
+.logout-icon .nav-link {
+  color: red !important;
+  font-size: 1.6rem;
+  padding: 0.5rem;
+}
+
+.logout-icon .nav-link:hover {
+  color: darkred !important;
+  background-color: transparent;
 }
